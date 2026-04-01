@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         AWS_REGION = 'us-east-1' // Your AWS region
-        ECR_REPO = '881490104063.dkr.ecr.us-east-1.amazonaws.com/my_pvt_repo' // Your ECR repository URI
+        ECR_REPO = '427888316942.dkr.ecr.us-east-1.amazonaws.com/my_pvt_repo' // Your ECR repository URI
         IMAGE_TAG = "v${BUILD_NUMBER}" // Dynamic version based on build number
         EKS_CLUSTER_NAME = 'vgs_cluster' // Replace with your EKS cluster name
         KUBECONFIG_PATH = '/opt/kube/config' // Path to kubeconfig file
@@ -12,7 +12,7 @@ pipeline {
         stage('SCM checkout') {
             steps {
                 script {
-                    git branch: 'main', credentialsId: 'git-cred', url: 'https://github.com/VenkatVGS/K8s_Real_Project.git'
+                    git branch: 'main', credentialsId: 'git-cred', url: 'https://github.com/marymetildasugirthamj-crypto/K8s_Real_Project.git'
                 }
             }
         }
@@ -26,7 +26,7 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
+         stage('Build') {
             steps {
                 script {
                     sh 'npm install'
@@ -93,7 +93,7 @@ pipeline {
                         helm package ${HELM_CHART_PATH}
                         pwd
                         #helm install myrocket /var/lib/jenkins/workspace/project/myrocketapp-0.1.0.tgz --kubeconfig /opt/kube/config
-                        helm upgrade --install myrocket /var/lib/jenkins/workspace/rocket/myrocketapp-0.1.0.tgz \
+                        helm upgrade --install myrocket /var/lib/jenkins/workspace/Deploy_EKS/myrocketapp-0.1.0.tgz \
                         --set image.tag=v${BUILD_NUMBER} 
                         """
                         
